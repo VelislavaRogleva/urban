@@ -54,7 +54,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         Map<String, Object> roles = new HashMap<>();
         for (GrantedAuthority grantedAuthority : principal.getAuthorities()) {
-            System.out.println(grantedAuthority);
             roles.put(grantedAuthority.getAuthority().replace("ROLE_", "").toLowerCase(), true);
         }
 

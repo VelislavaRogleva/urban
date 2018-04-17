@@ -2,6 +2,7 @@ package app.urbanist.entity;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,6 +24,12 @@ public class User {
 
     @ManyToMany
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<Report> reports;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
 
     public User() {
         this.roles = new HashSet<>();
@@ -66,5 +73,21 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

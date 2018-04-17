@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,6 +40,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = ModelParser.getInstance().map(urm, User.class);
         user.setPassword(this.passwordEncoder.encode(urm.getPassword()));
         Role role = this.roleRepository.findByName("USER");
+
         role.getUsers().add(user);
         user.getRoles().add(role);
 

@@ -17,6 +17,8 @@ import {AuthService} from './core/services/auth.service';
 import {UserService} from './core/services/users.service';
 import {TokenInterceptor} from './core/interceptors/token.interceptor';
 import {GlobalErrorHandler} from './core/error.handler';
+import { ReportComponent } from './components/report/report.component';
+import {ReportService} from './core/services/report.service';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import {GlobalErrorHandler} from './core/error.handler';
     HeaderComponent,
     LoginComponent,
     RegisterComponent,
-    UsersComponent
+    UsersComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import {GlobalErrorHandler} from './core/error.handler';
   providers: [
     AuthService,
     UserService,
+    ReportService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

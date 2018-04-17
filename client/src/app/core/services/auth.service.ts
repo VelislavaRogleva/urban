@@ -72,10 +72,33 @@ export class AuthService {
     return localStorage.getItem('authToken');
   }
 
+  getTokenExpirationDate(): Date {
+    const decoded = decode(this.getToken());
+
+    if (decoded.exp === undefined) return null;
+
+    const date = new Date(0);
+    date.setUTCSeconds(decoded.exp);
+    return date;
+  }
+
+  isTokenExpired(): boolean {
+    let token = this.getToken();
+    if(!token) return true;
+
+    const date = this.getTokenExpirationDate();
+    if(date === undefined) return false;
+    return !(date.valueOf() > new Date().valueOf());
+  }
+
 
   public isAuthenticated(): boolean {
-    let token = this.getToken();
-    return token != null;
+    if (this.getToken() === null) return false;
+    if (this.isTokenExpired()) {
+      this.logout();
+      return false;
+    }
+    return true;
   }
 
   public isAdmin(): boolean {

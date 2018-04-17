@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="margin-20">
+        <h4>Add customer</h4>
+      </div>
+      <form [formGroup]="form">
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" class="form-control" formControlName="location">
+        </div>
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" class="form-control" formControlName="title">
+        </div>
+        <div class="form-group">
+          <label>Text</label>
+          <input type="text" class="form-control" formControlName="text">
+        </div>
+        <!--addresses-->
+        <div formArrayName="images">
+          <div *ngFor="let image of form.controls.images.controls; let i=index" class="panel panel-default">
+            <div class="panel-heading">
+              <span>Images {{i + 1}}</span>
+
+            </div>
+            <div class="panel-body" [formGroupName]="i">
+              <div class="form-group col-xs-6">
+                <label>caption</label>
+                <input type="text" class="form-control" formControlName="caption">
+              </div>
+              <div class="form-group col-xs-6">
+                <label>file</label>
+                <input type="file" id="file" class="form-control" formControlName="file" (change)="onFileChange($event, i)" #fileInput)>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="margin-20">
+          <a (click)="addImage()" style="cursor: default">
+            Add another image +
+          </a>
+        </div>
+
+        <div class="margin-20">
+          <button class="button button-primary"
+                  (click)="submitData(form.value)">Submit</button>
+        </div>
+        <div class="clearfix"></div>
+
+
+      </form>
+    </div>
+  </div>
+</div>
