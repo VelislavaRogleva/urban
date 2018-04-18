@@ -1,56 +1,76 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="margin-20">
-        <h4>Add customer</h4>
-      </div>
-      <form [formGroup]="form">
-        <div class="form-group">
+<div class="row">
+  <div class="card-panel z-depth-0">
+
+    <h4>Report a problem</h4>
+
+    <form [formGroup]="form">
+
+      <div class="row">
+        <div class="input-field col s6">
           <label>Location</label>
           <input type="text" class="form-control" formControlName="location">
+          <small
+            *ngIf="form.controls.location.invalid && (form.controls.location.dirty || form.controls.location.touched)"
+            class="red-text">
+            Location required.
+          </small>
         </div>
-        <div class="form-group">
-          <label>Title</label>
-          <input type="text" class="form-control" formControlName="title">
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+        <label>Title</label>
+        <input type="text" class="form-control" formControlName="title">
+          <small
+            *ngIf="form.controls.title.invalid && (form.controls.title.dirty || form.controls.title.touched)"
+            class="red-text">
+            Title required.
+          </small>
         </div>
-        <div class="form-group">
-          <label>Content</label>
-          <input type="text" class="form-control" formControlName="content">
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+        <label>Content</label>
+          <textarea class="materialize-textarea" data-length="10000" formControlName="content"></textarea>
+          <small
+            *ngIf="form.controls.content.invalid && (form.controls.content.dirty || form.controls.content.touched)"
+            class="red-text">
+            Content required.
+          </small>
         </div>
-        <!--addresses-->
-        <div formArrayName="images">
-          <div *ngFor="let image of form.controls.images.controls; let i=index" class="panel panel-default">
-            <div class="panel-heading">
-              <span>Images {{i + 1}}</span>
+      </div>
 
+      <div formArrayName="images">
+        <div *ngFor="let image of form.controls.images.controls; let i=index">
+          <div class="row" [formGroupName]="i">
+            <div class="file-field input-field col s6">
+              <div class="btn">
+                <span>File</span>
+                <input type="file" id="file" class="form-control" formControlName="file"
+                       (change)="onFileChange($event, i)" #fileInput)>
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
             </div>
-            <div class="panel-body" [formGroupName]="i">
-              <div class="form-group col-xs-6">
-                <label>caption</label>
-                <input type="text" class="form-control" formControlName="caption">
-              </div>
-              <div class="form-group col-xs-6">
-                <label>file</label>
-                <input type="file" id="file" class="form-control" formControlName="file" (change)="onFileChange($event, i)" #fileInput)>
-              </div>
+            <div class="input-field col s6">
+              <label>caption</label>
+              <input type="text" class="form-control" formControlName="caption">
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="margin-20">
-          <a (click)="addImage()" style="cursor: default">
-            Add another image +
-          </a>
-        </div>
+      <div>
+        <a (click)="addImage()" style="cursor: default">
+          Add another image +
+        </a>
+      </div>
 
-        <div class="margin-20">
-          <button class="button button-primary"
-                  (click)="submitData(form.value)">Submit</button>
-        </div>
-        <div class="clearfix"></div>
+      <button class="waves-effect waves-light btn"
+              (click)="submitData(form.value)" [disabled]="!form.valid">Submit
+      </button>
 
-
-      </form>
-    </div>
+    </form>
   </div>
 </div>
+

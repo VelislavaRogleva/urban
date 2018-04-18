@@ -10,10 +10,24 @@ export class ImageModel {
   file: any;
 }
 
+export class ImageViewModel {
+  caption: String;
+  url: String;
+}
+
 export class AllReportsModel {
   id: Number;
   title: String;
   content: String;
   username: String;
   publishedOn: Date;
+}
+
+export class ReportDetailsModel {
+  id: Number;
+  title: String;
+  content: String;
+  username: String;
+  publishedOn: Date;
+  images: ImageViewModel[];
 }

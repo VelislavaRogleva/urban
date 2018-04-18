@@ -1,8 +1,8 @@
 
 <div class="row" *ngFor="let report of reports">
-  <div class="col s2 offset-s2 grey-text text-lighten-1">Published on {{report.publishedOn |  date:'MM/dd/yyyy'}}</div>
+  <div class="col s2 grey-text text-lighten-1">Published on {{report.publishedOn |  date:'MM/dd/yyyy'}}</div>
   <div class="col s6">
-    <span>{{report.title}}</span>
+    <a routerLink="/details/{{report.id}}"><span>{{report.title}}</span></a>
     <p>{{report.content.substr(0, 200)}}...</p>
   </div>
 </div>
