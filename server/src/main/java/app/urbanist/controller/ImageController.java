@@ -1,12 +1,9 @@
 package app.urbanist.controller;
 
-import app.urbanist.cloud.CloudImageUploader;
 import app.urbanist.service.ImageService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import java.io.IOException;
 
 @RestController
 public class ImageController {

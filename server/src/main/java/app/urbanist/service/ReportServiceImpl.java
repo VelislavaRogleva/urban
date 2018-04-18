@@ -77,9 +77,11 @@ public class ReportServiceImpl implements ReportService {
 
         Report report = opt.get();
         ReportDetailsModel rdm = new ReportDetailsModel();
+        rdm.setId(report.getId());
         rdm.setTitle(report.getTitle());
         rdm.setContent(report.getContent());
         rdm.setPublishedOn(report.getPublishedOn());
+        rdm.setUsername(report.getUser().getUsername());
 
         List<ImageViewModel> imageViewModels = new ArrayList<>();
         for (Image image : report.getImages()) {
@@ -89,7 +91,7 @@ public class ReportServiceImpl implements ReportService {
             if (downloadLink != null) {
                 ImageViewModel ivm = new ImageViewModel();
                 ivm.setCaption(image.getCaption());
-                ivm.setImageUrl(downloadLink);
+                ivm.setUrl(downloadLink);
                 imageViewModels.add(ivm);
             }
         }

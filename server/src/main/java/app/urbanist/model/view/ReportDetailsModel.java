@@ -5,13 +5,25 @@ import java.util.List;
 
 public class ReportDetailsModel {
 
+    private Long id;
+
     private String title;
 
     private String content;
 
     private Date publishedOn;
 
+    private String username;
+
     private List<ImageViewModel> images;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -43,5 +55,13 @@ public class ReportDetailsModel {
 
     public void setImages(List<ImageViewModel> images) {
         this.images = images;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

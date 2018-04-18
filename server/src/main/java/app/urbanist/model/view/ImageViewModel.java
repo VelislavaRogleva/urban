@@ -4,7 +4,7 @@ public class ImageViewModel {
 
     private String caption;
 
-    private String imageUrl;
+    private String url;
 
     public String getCaption() {
         return caption;
@@ -14,11 +14,11 @@ public class ImageViewModel {
         this.caption = caption;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
