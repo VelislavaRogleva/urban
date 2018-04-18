@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {ReportService} from '../../core/services/report.service';
+import {AllReportsModel} from '../../core/models/report.model';
 
 @Component({
   selector: 'app-all-reports',
   templateUrl: './all-reports.component.html'
 })
 export class AllReportsComponent implements OnInit {
+
+  reports: AllReportsModel[];
 
   constructor(private reportService: ReportService) { }
 
@@ -14,7 +17,11 @@ export class AllReportsComponent implements OnInit {
   }
 
   getAllReports() {
-    this.reportService.getAllReports().subscribe(res => {console.log(res)})
+    this.reportService.getAllReports().subscribe(res => {this.reports = res;
+      for (let report of this.reports) {
+        console.log(typeof report.publishedOn);
+      }
+    })
   }
 
 }

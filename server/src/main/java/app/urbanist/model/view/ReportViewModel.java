@@ -12,7 +12,7 @@ public class ReportViewModel {
 
     private Date publishedOn;
 
-    private UserViewModel user;
+    private String username;
 
     public Long getId() {
         return id;
@@ -46,11 +46,11 @@ public class ReportViewModel {
         this.publishedOn = publishedOn;
     }
 
-    public UserViewModel getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(UserViewModel user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

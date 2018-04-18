@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 
 import {ToastrService} from 'ngx-toastr';
 import {environment} from '../../../environments/environment';
-import {ReportModel} from '../models/report.model';
+import {AllReportsModel, ReportModel} from '../models/report.model';
 
 @Injectable()
 export class ReportService {
@@ -26,7 +26,7 @@ export class ReportService {
 
     let url = environment.api_url + '/reports/all';
 
-    return this.http.get(url);
+    return this.http.get<AllReportsModel[]>(url);
 
   }
 

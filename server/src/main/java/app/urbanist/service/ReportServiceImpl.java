@@ -63,6 +63,7 @@ public class ReportServiceImpl implements ReportService {
         List<ReportViewModel> viewModels = new ArrayList<>();
         for (Report report : all) {
             ReportViewModel rvm = ModelParser.getInstance().map(report, ReportViewModel.class);
+            rvm.setUsername(report.getUser().getUsername());
             viewModels.add(rvm);
         }
 
