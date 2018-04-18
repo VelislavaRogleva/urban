@@ -8,6 +8,7 @@ import {RegisterModel} from '../models/register.model';
 import * as decode from 'jwt-decode';
 import {ToastrService} from 'ngx-toastr';
 import {environment} from '../../../environments/environment';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -17,12 +18,16 @@ const httpOptions = {
 @Injectable()
 export class AuthService {
 
-  authenticated: boolean = false;
-  admin: boolean = false;
+  public isLoggedIn: boolean;
+  public isAdmin: boolean;
 
   constructor(private router: Router,
               private http: HttpClient,
-              private toastrService: ToastrService) {}
+              private toastrService: ToastrService) {
+
+    this.isLoggedIn = this.isAuthenticated();
+
+  }
 
 
   login(username: String, password: String) {
@@ -36,10 +41,9 @@ export class AuthService {
 
           localStorage.setItem('authToken', token);
 
-          this.authenticated = true;
-
-          if (this.isAdmin()) {
-            this.admin = true;
+          this.isLoggedIn = true;
+          if (this.checkIfAdmin()) {
+            this.isAdmin = true;
           }
 
           this.router.navigate(['/']);
@@ -72,9 +76,9 @@ export class AuthService {
   }
 
   logout() {
-    this.authenticated = false;
-    this.admin = false;
     localStorage.removeItem("authToken");
+    this.isLoggedIn = false;
+    this.isAdmin = false;
     this.router.navigate(['/']);
     this.toastrService.success("You have successfully logged out!")
   }
@@ -112,7 +116,8 @@ export class AuthService {
     return true;
   }
 
-  public isAdmin(): boolean {
+  public checkIfAdmin(): boolean {
+    if (this.getToken() === null) return false;
     let decoded = decode(this.getToken());
 
     return decoded['admin'] != null;

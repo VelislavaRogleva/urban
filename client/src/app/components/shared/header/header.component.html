@@ -1,7 +1,7 @@
 <nav class="z-depth-0 white blue-text">
   <a href="/" class="brand-logo">blah</a>
 
-  <div class="nav-wrapper blue-text">
+  <div class="nav-wrapper blue-text" >
     <ul class="left hide-on-med-and-down">
       <li>
         <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
@@ -9,21 +9,22 @@
       <li>
         <a routerLink="/reports" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">View reports</a>
       </li>
-      <li *ngIf="authService.authenticated">
+      <li *ngIf="authService.isLoggedIn">
         <a routerLink="/report" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Add report</a>
       </li>
-      <li *ngIf="authService.admin">
+      <li *ngIf="authService.isAdmin">
         <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All users</a>
       </li>
     </ul>
+
     <ul class="right hide-on-med-and-down">
-      <li *ngIf="!authService.authenticated">
+      <li *ngIf="!authService.isLoggedIn">
         <a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Log in</a>
       </li>
-      <li *ngIf="!authService.authenticated">
+      <li *ngIf="!authService.isLoggedIn">
         <a routerLink="/register" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Register</a>
       </li>
-      <li *ngIf="authService.authenticated">
+      <li *ngIf="authService.isLoggedIn">
         <a routerLinkActive="active" (click)="authService.logout()">Log Out</a>
       </li>
     </ul>
