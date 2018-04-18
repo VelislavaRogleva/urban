@@ -1,30 +1,61 @@
 <form [formGroup]="form">
-  <fieldset>
-    <legend>Register</legend>
-    <div class="form-field">
-      <label>Username:</label>
-      <input name="username" formControlName="username">
+
+  <div class="card-panel z-depth-0">
+
+    <h4 class="header2">Register here</h4>
+
+    <div class="row">
+      <div class="input-field col s6">
+
+        <input id="username" name="username" formControlName="username" type="text">
+        <label class="active" for="username">Username:</label>
+        <small
+          *ngIf="form.controls.username.invalid && (form.controls.username.dirty || form.controls.username.touched)"
+          class="red-text">
+          Username required.
+        </small>
+      </div>
     </div>
-    <div class="form-field">
-      <label>Email:</label>
-      <input name="email" formControlName="email"
-             type="email">
+
+    <div class="row">
+      <div class="input-field col s6">
+
+        <input id="email" name="email" formControlName="email" type="email">
+        <label class="active" for="email">Email:</label>
+        <small *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)"
+               class="red-text">
+          Email required.
+        </small>
+      </div>
     </div>
-    <div class="form-field">
-      <label>Password:</label>
-      <input name="password" formControlName="password"
-             type="password">
+    <div class="row">
+      <div class="input-field col s6">
+
+        <input id="password" name="password" formControlName="password" type="password">
+        <label class="active" for="password">Password:</label>
+        <small
+          *ngIf="form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)"
+          class="red-text">
+          Password required.
+        </small>
+      </div>
     </div>
-    <div class="form-field">
-      <label>Confirm password:</label>
-      <input name="confirm" formControlName="confirm"
-             type="password">
+    <div class="row">
+      <div class="input-field col s6">
+
+        <input id="confirm" name="confirm" formControlName="confirm" type="password">
+        <label class="active" for="confirm">Confirm password:</label>
+        <small class="red-text"
+               *ngIf="form.controls.confirm.errors?.MatchPassword && (form.controls.confirm.dirty || form.controls.confirm.touched)">
+          Passwords do not match
+        </small>
+      </div>
     </div>
 
 
-  </fieldset>
-  <div class="form-buttons">
-    <button class="button button-primary"
-            (click)="register()">Register</button>
+    <button class="waves-effect waves-light btn"
+            (click)="register()" [disabled]="!form.valid">Register
+    </button>
   </div>
+
 </form>

@@ -17,6 +17,9 @@ const httpOptions = {
 @Injectable()
 export class AuthService {
 
+  authenticated: boolean = false;
+  admin: boolean = false;
+
   constructor(private router: Router,
               private http: HttpClient,
               private toastrService: ToastrService) {}
@@ -32,6 +35,12 @@ export class AuthService {
           let token = res.headers.get('Authorization').replace('Bearer ', '');
 
           localStorage.setItem('authToken', token);
+
+          this.authenticated = true;
+
+          if (this.isAdmin()) {
+            this.admin = true;
+          }
 
           this.router.navigate(['/']);
 
@@ -63,6 +72,8 @@ export class AuthService {
   }
 
   logout() {
+    this.authenticated = false;
+    this.admin = false;
     localStorage.removeItem("authToken");
     this.router.navigate(['/']);
     this.toastrService.success("You have successfully logged out!")

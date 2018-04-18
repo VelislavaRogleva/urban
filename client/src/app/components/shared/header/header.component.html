@@ -1,47 +1,31 @@
-<nav class="navbar navbar-light">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/">blah</a>
+<nav class="z-depth-0 white blue-text">
+  <a href="/" class="brand-logo">blah</a>
 
-    <!-- Show this for logged out users -->
-    <ul class="nav navbar-nav pull-xs-right" *ngIf="!authService.isAuthenticated()">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/">Home</a>
+  <div class="nav-wrapper blue-text">
+    <ul class="left hide-on-med-and-down">
+      <li>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/login" routerLinkActive="active">Log in</a>
+      <li>
+        <a routerLink="/reports" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">View reports</a>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+      <li *ngIf="authService.authenticated">
+        <a routerLink="/report" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Add report</a>
+      </li>
+      <li *ngIf="authService.admin">
+        <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All users</a>
       </li>
     </ul>
-
-    <!-- Show this for logged in users -->
-    <ul class="nav navbar-nav pull-xs-right" *ngIf="authService.isAuthenticated()">
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <ul class="right hide-on-med-and-down">
+      <li *ngIf="!authService.authenticated">
+        <a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Log in</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/report" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Add report</a>
+      <li *ngIf="!authService.authenticated">
+        <a routerLink="/register" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Register</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" (click)="authService.logout()">Log Out</a>
+      <li *ngIf="authService.authenticated">
+        <a routerLinkActive="active" (click)="authService.logout()">Log Out</a>
       </li>
-
     </ul>
-
-    <!-- Show this for admins -->
-    <ul class="nav navbar-nav pull-xs-right" *ngIf="authService.isAuthenticated() && authService.isAdmin()">
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/users">All users</a>
-      </li>
-
-    </ul>
-
-
-
   </div>
 </nav>

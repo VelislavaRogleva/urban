@@ -1,18 +1,38 @@
 <form [formGroup]="form">
-  <fieldset>
-    <legend>Login</legend>
-    <div class="form-field">
-      <label>Username:</label>
-      <input name="username" formControlName="username">
+
+  <div class="card-panel z-depth-0">
+
+    <h4>Log in</h4>
+    <h6>or <a routerLink="/register">register</a> if you don't have an account yet</h6>
+
+    <div class="row">
+      <div class="input-field col s6">
+
+        <input id="username" name="username" formControlName="username" type="text">
+        <label class="active" for="username">Username:</label>
+        <small
+          *ngIf="form.controls.username.invalid && (form.controls.username.dirty || form.controls.username.touched)"
+          class="red-text">
+          Username required.
+        </small>
+      </div>
     </div>
-    <div class="form-field">
-      <label>Password:</label>
-      <input name="password" formControlName="password"
-             type="password">
+    <div class="row">
+      <div class="input-field col s6">
+
+        <input id="password" name="password" formControlName="password" type="password">
+        <label class="active" for="password">Password:</label>
+        <small
+          *ngIf="form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)"
+          class="red-text">
+          Password required.
+        </small>
+      </div>
     </div>
-  </fieldset>
-  <div class="form-buttons">
-    <button class="button button-primary"
-            (click)="login()">Login</button>
+
+
+    <button class="waves-effect waves-light btn"
+            (click)="login()" [disabled]="!form.valid">Login
+    </button>
   </div>
 </form>

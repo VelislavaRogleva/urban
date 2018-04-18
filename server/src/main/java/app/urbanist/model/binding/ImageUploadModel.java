@@ -1,9 +1,12 @@
 package app.urbanist.model.binding;
 
+import javax.validation.constraints.NotEmpty;
+
 public class ImageUploadModel {
 
     private String caption;
 
+    @NotEmpty
     private String file;
 
     public String getCaption() {

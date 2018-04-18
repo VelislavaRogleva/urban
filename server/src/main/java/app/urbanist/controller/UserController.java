@@ -7,6 +7,7 @@ import app.urbanist.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody UserRegisterModel urm) {
+    public void register(@Valid @RequestBody UserRegisterModel urm) {
         this.userService.registerUser(urm);
     }
 

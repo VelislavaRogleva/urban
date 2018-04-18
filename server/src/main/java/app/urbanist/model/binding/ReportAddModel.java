@@ -1,13 +1,17 @@
 package app.urbanist.model.binding;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class ReportAddModel {
 
+    @NotEmpty
     private String location;
 
+    @NotEmpty
     private String title;
 
+    @NotEmpty
     private String content;
 
     private List<ImageUploadModel> images;

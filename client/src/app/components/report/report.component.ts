@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, FormArray, Validators} from '@angular/forms';
 
-import {ReportModel, ImageModel} from '../../core/models/report.model';
+import {ReportModel} from '../../core/models/report.model';
 import {ReportService} from '../../core/services/report.service';
+import {ImageUploadService} from '../../core/services/image.upload.service';
 
 @Component({
   selector: 'app-report',
@@ -13,7 +14,8 @@ export class ReportComponent implements OnInit {
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private reportService: ReportService) {
+              private reportService: ReportService,
+              private imageUploadService: ImageUploadService) {
 
   }
 
@@ -21,7 +23,7 @@ export class ReportComponent implements OnInit {
     this.form = this.fb.group({
       location: ['', Validators.required],
       title: ['', Validators.required],
-      text: ['', Validators.required],
+      content: ['', Validators.required],
       images: this.fb.array([this.initImages()])
     });
   }
@@ -49,10 +51,9 @@ export class ReportComponent implements OnInit {
     if(event.target.files.length > 0) {
       let file = event.target.files[0];
 
-      this.reportService.addPicture(file).subscribe(res => { this.form.controls.images.value[i].file = res; });
-
-
-    }
+      this.imageUploadService.addPicture(file).subscribe(res => {
+        this.form.controls.images.value[i].file = res; });
+      }
   }
 
 

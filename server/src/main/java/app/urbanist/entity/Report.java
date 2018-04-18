@@ -1,6 +1,7 @@
 package app.urbanist.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +33,11 @@ public class Report {
 
     @OneToMany(mappedBy = "report")
     private List<Comment> comments;
+
+    public Report() {
+        this.images = new ArrayList<>();
+        this.comments = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;

@@ -19,6 +19,9 @@ import {TokenInterceptor} from './core/interceptors/token.interceptor';
 import {GlobalErrorHandler} from './core/error.handler';
 import { ReportComponent } from './components/report/report.component';
 import {ReportService} from './core/services/report.service';
+import {ImageUploadService} from './core/services/image.upload.service';
+import { AllReportsComponent } from './components/all-reports/all-reports.component';
+import { ReportDetailsComponent } from './components/report-details/report-details.component';
 
 
 @NgModule({
@@ -29,7 +32,9 @@ import {ReportService} from './core/services/report.service';
     LoginComponent,
     RegisterComponent,
     UsersComponent,
-    ReportComponent
+    ReportComponent,
+    AllReportsComponent,
+    ReportDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +49,7 @@ import {ReportService} from './core/services/report.service';
     AuthService,
     UserService,
     ReportService,
+    ImageUploadService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

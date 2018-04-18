@@ -1,7 +1,6 @@
 package app.urbanist.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 public class Image {
@@ -11,7 +10,7 @@ public class Image {
     private Long id;
 
     @Column(nullable = false)
-    private String pCloudId;
+    private String file;
 
     @Column
     private String caption;
@@ -28,12 +27,12 @@ public class Image {
         this.id = id;
     }
 
-    public String getpCloudId() {
-        return pCloudId;
+    public String getFile() {
+        return file;
     }
 
-    public void setpCloudId(String pCloudId) {
-        this.pCloudId = pCloudId;
+    public void setFile(String file) {
+        this.file = file;
     }
 
     public String getCaption() {
