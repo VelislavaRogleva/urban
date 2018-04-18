@@ -14,14 +14,18 @@ import { RegisterComponent } from './components/register/register.component';
 import { UsersComponent } from './components/users/users.component';
 
 import {AuthService} from './core/services/auth.service';
+import {AuthGuardService} from './core/services/auth-guard.service';
 import {UserService} from './core/services/users.service';
-import {TokenInterceptor} from './core/interceptors/token.interceptor';
-import {GlobalErrorHandler} from './core/error.handler';
-import { ReportComponent } from './components/report/report.component';
 import {ReportService} from './core/services/report.service';
 import {ImageUploadService} from './core/services/image.upload.service';
+
+import {TokenInterceptor} from './core/interceptors/token.interceptor';
+import {GlobalErrorHandler} from './core/error.handler';
+
+import { ReportComponent } from './components/report/report.component';
 import { AllReportsComponent } from './components/all-reports/all-reports.component';
 import { ReportDetailsComponent } from './components/report-details/report-details.component';
+
 
 
 @NgModule({
@@ -47,6 +51,7 @@ import { ReportDetailsComponent } from './components/report-details/report-detai
   ],
   providers: [
     AuthService,
+    AuthGuardService,
     UserService,
     ReportService,
     ImageUploadService,

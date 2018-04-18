@@ -7,12 +7,14 @@ import {UsersComponent} from './components/users/users.component';
 import {ReportComponent} from './components/report/report.component';
 import {AllReportsComponent} from './components/all-reports/all-reports.component';
 
+import {AuthGuardService as AuthGuard} from './core/services/auth-guard.service'
+
 const routes: Routes = [
 
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'users', component: UsersComponent},
-  {path: 'report', component: ReportComponent},
+  {path: 'report', component: ReportComponent, canActivate: [AuthGuard]},
   {path: 'reports', component: AllReportsComponent}
 
 ];
