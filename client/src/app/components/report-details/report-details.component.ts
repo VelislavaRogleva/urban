@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ReportDetailsModel} from '../../core/models/report.model';
 import {ReportService} from '../../core/services/report.service';
 import {ActivatedRoute} from '@angular/router';
+import {share} from 'rxjs/operators';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-report-details',
@@ -9,7 +11,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ReportDetailsComponent implements OnInit {
 
-  report: ReportDetailsModel;
+  report: Observable<ReportDetailsModel>;
 
   constructor(private reportService: ReportService, private route: ActivatedRoute) { }
 
@@ -19,8 +21,7 @@ export class ReportDetailsComponent implements OnInit {
 
   private getReport() {
     let id =  +this.route.snapshot.paramMap.get("id");
-    this.reportService.getReport(id).subscribe(report => {this.report = report});
-
+    this.report = this.reportService.getReport(id).pipe(share())
   }
 
 }

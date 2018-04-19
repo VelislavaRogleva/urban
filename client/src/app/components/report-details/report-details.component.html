@@ -1,1 +1,33 @@
+<div *ngIf="report | async; let report; else loading">
+  <h4 class="header2">{{report.title}}</h4>
+  <div class="col s2 grey-text text-lighten-1">Published on {{report.publishedOn | date:'MM/dd/yyyy'}}</div>
+
+  <div>
+    <div ng2-carouselamos
+         [items]="report.images"
+         [width]="500"
+         [$prev]="prev"
+         [$next]="next"
+         [$item]="item">
+    </div>
+
+    <ng-template #prev>
+      <i class="large material-icons">chevron_left</i>
+    </ng-template>
+    <ng-template #next>
+      <i class="large material-icons">chevron_right</i>
+    </ng-template>
+
+    <ng-template #item let-item let-i="index">
+
+      <div class="images">
+        <img src="{{item.url}}">
+      </div>
+
+    </ng-template>
+  </div>
+</div>
+<ng-template #loading>Loading Data...</ng-template>
+
+
 
