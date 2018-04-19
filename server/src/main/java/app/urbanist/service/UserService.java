@@ -1,5 +1,6 @@
 package app.urbanist.service;
 
+import app.urbanist.entity.User;
 import app.urbanist.exception.EmailNotUniqueException;
 import app.urbanist.exception.UsernameNotUniqueException;
 import app.urbanist.model.binding.UserRegisterModel;
@@ -12,4 +13,6 @@ public interface UserService {
     boolean registerUser(UserRegisterModel urm) throws EmailNotUniqueException, UsernameNotUniqueException;
 
     List<UserViewModel> getAllUsers();
+
+    User getOne(Long id);
 }

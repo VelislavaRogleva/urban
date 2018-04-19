@@ -67,7 +67,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public ReportDetailsModel getOne(Long id) {
+    public ReportDetailsModel getReportDetails(Long id) {
         Optional<Report> opt = this.reportRepository.findById(id);
         if (!opt.isPresent()) return null;
 
@@ -93,5 +93,12 @@ public class ReportServiceImpl implements ReportService {
 
         rdm.setImages(imageViewModels);
         return rdm;
+    }
+
+    @Override
+    public Report getOne(Long id) {
+        Optional<Report> opt = this.reportRepository.findById(id);
+        if (!opt.isPresent()) return null;
+        return opt.get();
     }
 }

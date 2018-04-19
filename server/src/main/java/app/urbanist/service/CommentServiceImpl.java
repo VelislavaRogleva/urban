@@ -2,10 +2,10 @@ package app.urbanist.service;
 
 import app.urbanist.entity.Comment;
 import app.urbanist.entity.Report;
+import app.urbanist.entity.User;
 import app.urbanist.model.binding.CommentAddModel;
 import app.urbanist.model.view.CommentViewModel;
 import app.urbanist.repository.CommentRepository;
-import app.urbanist.repository.ReportRepository;
 import app.urbanist.repository.UserRepository;
 import app.urbanist.util.ModelParser;
 import org.springframework.stereotype.Service;
@@ -13,19 +13,18 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
-    private final ReportRepository reportRepository;
-    private final UserRepository userRepository;
+    private final ReportService reportService;
+    private final UserService userService;
 
-    public CommentServiceImpl(CommentRepository commentRepository, ReportRepository reportRepository, UserRepository userRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, ReportService reportService, UserService userService) {
         this.commentRepository = commentRepository;
-        this.reportRepository = reportRepository;
-        this.userRepository = userRepository;
+        this.reportService = reportService;
+        this.userService = userService;
     }
 
     @Override
@@ -33,8 +32,15 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = new Comment();
         comment.setContent(cam.getContent());
         comment.setPublishedOn(new Date());
-        comment.setReport(this.reportRepository.getOne(cam.getReportId()));
-        comment.setUser(this.userRepository.getOne(cam.getUserId()));
+
+        Report report = this.reportService.getOne(cam.getReportId());
+        if (report == null) return false;
+
+        User user = this.userService.getOne(cam.getUserId());
+        if (user == null) return false;
+
+        comment.setReport(this.reportService.getOne(cam.getReportId()));
+        comment.setUser(this.userService.getOne(cam.getUserId()));
 
         this.commentRepository.save(comment);
 
@@ -43,10 +49,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentViewModel> getComments(Long reportId) {
-        Optional<Report> opt = this.reportRepository.findById(reportId);
-        if (!opt.isPresent()) return null;
+        Report report = this.reportService.getOne(reportId);
+        if (report == null) return null;
 
-        List<Comment> comments = this.commentRepository.findAllByReportOrderByPublishedOn(opt.get());
+        List<Comment> comments = this.commentRepository.findAllByReportOrderByPublishedOn(report);
 
         List<CommentViewModel> commentViewModels = new ArrayList<>();
         for (Comment comment : comments) {

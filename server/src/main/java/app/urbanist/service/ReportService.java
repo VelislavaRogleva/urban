@@ -1,5 +1,6 @@
 package app.urbanist.service;
 
+import app.urbanist.entity.Report;
 import app.urbanist.model.binding.ReportAddModel;
 import app.urbanist.model.view.ReportDetailsModel;
 import app.urbanist.model.view.ReportViewModel;
@@ -11,5 +12,7 @@ public interface ReportService {
 
     List<ReportViewModel> getAll();
 
-    ReportDetailsModel getOne(Long id);
+    ReportDetailsModel getReportDetails(Long id);
+
+    Report getOne(Long id);
 }

@@ -33,7 +33,7 @@ public class ReportController {
     @GetMapping("/reports/details/{id}")
     public ResponseEntity<?> reportDetails(@PathVariable("id") Long id) {
 
-        ReportDetailsModel rdm = this.reportService.getOne(id);
+        ReportDetailsModel rdm = this.reportService.getReportDetails(id);
 
         if (rdm == null) return new ResponseEntity<>("Report not found", HttpStatus.NOT_FOUND);
 

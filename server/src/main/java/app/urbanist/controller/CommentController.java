@@ -20,8 +20,12 @@ public class CommentController {
     }
 
     @PostMapping("/comments/add")
-    public void addComment(@Valid @RequestBody CommentAddModel cam){
-        this.commentService.addComment(cam);
+    public ResponseEntity<?> addComment(@Valid @RequestBody CommentAddModel cam){
+        boolean result = this.commentService.addComment(cam);
+
+        if (!result) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/comments/get/{id}")

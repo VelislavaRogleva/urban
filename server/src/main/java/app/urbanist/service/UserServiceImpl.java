@@ -70,6 +70,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return models;
     }
 
+    @Override
+    public User getOne(Long id) {
+        Optional<User> user = this.userRepository.findById(id);
+        if (!user.isPresent()) return null;
+        return user.get();
+    }
 
 //    @Override
 //    public void registerUser(@Valid UserRegisterModel urm) throws UsernameNotUniqueException, EmailNotUniqueException {
