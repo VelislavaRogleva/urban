@@ -1,5 +1,7 @@
 package app.urbanist.controller;
 
+import app.urbanist.exception.EmailNotUniqueException;
+import app.urbanist.exception.UsernameNotUniqueException;
 import app.urbanist.model.binding.UserRegisterModel;
 import app.urbanist.model.view.UserViewModel;
 import app.urbanist.service.UserService;
@@ -21,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public void register(@Valid @RequestBody UserRegisterModel urm) {
+    public void register(@Valid @RequestBody UserRegisterModel urm) throws EmailNotUniqueException, UsernameNotUniqueException {
         this.userService.registerUser(urm);
     }
 

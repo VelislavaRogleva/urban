@@ -4,7 +4,8 @@ import app.urbanist.model.binding.ReportAddModel;
 import app.urbanist.model.view.ReportDetailsModel;
 import app.urbanist.model.view.ReportViewModel;
 import app.urbanist.service.ReportService;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,7 +31,12 @@ public class ReportController {
     }
 
     @GetMapping("/reports/details/{id}")
-    public ReportDetailsModel reportDetails(@PathVariable("id") Long id) {
-        return this.reportService.getOne(id);
+    public ResponseEntity<?> reportDetails(@PathVariable("id") Long id) {
+
+        ReportDetailsModel rdm = this.reportService.getOne(id);
+
+        if (rdm == null) return new ResponseEntity<>("Report not found", HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(rdm, HttpStatus.OK);
     }
 }

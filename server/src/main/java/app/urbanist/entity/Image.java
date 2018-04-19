@@ -16,7 +16,7 @@ public class Image {
     private String caption;
 
     @ManyToOne
-    @JoinColumn(name = "report_id")
+    @JoinColumn(name = "report_id", nullable = false)
     private Report report;
 
     public Long getId() {

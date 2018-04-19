@@ -7,7 +7,7 @@ import app.urbanist.model.view.ReportViewModel;
 import java.util.List;
 
 public interface ReportService {
-    void addNewReport(ReportAddModel ram);
+    boolean addNewReport(ReportAddModel ram);
 
     List<ReportViewModel> getAll();
 

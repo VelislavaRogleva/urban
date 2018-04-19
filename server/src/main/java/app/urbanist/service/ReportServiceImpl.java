@@ -7,7 +7,6 @@ import app.urbanist.model.binding.ReportAddModel;
 import app.urbanist.model.view.ImageViewModel;
 import app.urbanist.model.view.ReportDetailsModel;
 import app.urbanist.model.view.ReportViewModel;
-import app.urbanist.repository.ImageRepository;
 import app.urbanist.repository.ReportRepository;
 import app.urbanist.repository.UserRepository;
 import app.urbanist.util.ModelParser;
@@ -25,26 +24,21 @@ import java.util.Optional;
 public class ReportServiceImpl implements ReportService {
 
     private final ReportRepository reportRepository;
-    private final ImageRepository imageRepository;
     private final UserRepository userRepository;
+
     private final ImageService imageService;
 
-    public ReportServiceImpl(ReportRepository reportRepository, ImageRepository imageRepository, UserRepository userRepository, ImageService imageService) {
+    public ReportServiceImpl(ReportRepository reportRepository, UserRepository userRepository, ImageService imageService) {
         this.reportRepository = reportRepository;
-        this.imageRepository = imageRepository;
         this.userRepository = userRepository;
         this.imageService = imageService;
     }
 
     @Override
-    public void addNewReport(ReportAddModel ram) {
-        Report report = new Report();
-        report.setLocation(ram.getLocation());
-        report.setTitle(ram.getTitle());
-        report.setContent(ram.getContent());
+    public boolean addNewReport(ReportAddModel ram) {
+        Report report = ModelParser.getInstance().map(ram, Report.class);
 
         report.setUser(this.userRepository.findByUsername((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
-
         report.setPublishedOn(new Date());
 
         this.reportRepository.save(report);
@@ -52,8 +46,10 @@ public class ReportServiceImpl implements ReportService {
         for (ImageUploadModel imageUploadModel : ram.getImages()) {
             Image image = ModelParser.getInstance().map(imageUploadModel, Image.class);
             image.setReport(report);
-            this.imageRepository.save(image);
+            this.imageService.save(image);
         }
+
+        return true;
     }
 
     @Override
@@ -76,14 +72,13 @@ public class ReportServiceImpl implements ReportService {
         if (!opt.isPresent()) return null;
 
         Report report = opt.get();
-        ReportDetailsModel rdm = new ReportDetailsModel();
-        rdm.setId(report.getId());
-        rdm.setTitle(report.getTitle());
-        rdm.setContent(report.getContent());
-        rdm.setPublishedOn(report.getPublishedOn());
+
+        ReportDetailsModel rdm = ModelParser.getInstance().map(report, ReportDetailsModel.class);
+
         rdm.setUsername(report.getUser().getUsername());
 
         List<ImageViewModel> imageViewModels = new ArrayList<>();
+
         for (Image image : report.getImages()) {
 
             String downloadLink = this.imageService.getDownloadLink(image.getFile());

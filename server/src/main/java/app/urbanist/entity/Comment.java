@@ -14,14 +14,14 @@ public class Comment {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "report_id")
+    @JoinColumn(name = "report_id", nullable = false)
     private Report report;
 
     @Column(nullable = false)
     private Date publishedOn;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Long getId() {

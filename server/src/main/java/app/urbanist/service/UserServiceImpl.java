@@ -3,6 +3,8 @@ package app.urbanist.service;
 import app.urbanist.entity.Role;
 import app.urbanist.entity.User;
 
+import app.urbanist.exception.EmailNotUniqueException;
+import app.urbanist.exception.UsernameNotUniqueException;
 import app.urbanist.model.binding.UserRegisterModel;
 import app.urbanist.model.view.UserViewModel;
 import app.urbanist.repository.RoleRepository;
@@ -34,9 +36,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void registerUser(UserRegisterModel urm) {
+    public boolean registerUser(UserRegisterModel urm) throws EmailNotUniqueException, UsernameNotUniqueException {
 
-        //check if username or email already exists
+        if(this.userRepository.findByUsername(urm.getUsername()) != null) {
+            throw new UsernameNotUniqueException("Username is already in use");
+        }
+
+        if (urm.getEmail() != null && this.userRepository.findByEmail(urm.getEmail()) != null) {
+            throw new EmailNotUniqueException("Email is already in use");
+        }
+
         User user = ModelParser.getInstance().map(urm, User.class);
         user.setPassword(this.passwordEncoder.encode(urm.getPassword()));
         Role role = this.roleRepository.findByName("USER");
@@ -46,6 +55,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         this.roleRepository.save(role);
         this.userRepository.save(user);
+
+        return true;
     }
 
     @Override
