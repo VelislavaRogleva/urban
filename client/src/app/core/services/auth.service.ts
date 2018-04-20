@@ -26,6 +26,7 @@ export class AuthService {
               private toastrService: ToastrService) {
 
     this.isLoggedIn = this.isAuthenticated();
+    this.isAdmin = this.checkIfAdmin();
 
   }
 

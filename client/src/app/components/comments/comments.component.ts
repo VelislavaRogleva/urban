@@ -13,6 +13,7 @@ import {AuthService} from '../../core/services/auth.service';
 export class CommentsComponent implements OnInit {
 
   public comments: CommentModel[];
+  public showComments = false;
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
@@ -22,6 +23,7 @@ export class CommentsComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.form = this.fb.group({
       content: ['', Validators.required]
     });
@@ -42,5 +44,15 @@ export class CommentsComponent implements OnInit {
       this.form.reset();
       this.getComments();
     });
+  }
+
+  displayComments() {
+    this.getComments();
+    this.showComments = true;
+  }
+
+  hideComments() {
+    this.comments = [];
+    this.showComments = false;
   }
 }

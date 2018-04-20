@@ -1,5 +1,23 @@
-<ul>
-  <li *ngFor="let user of users">
-    <h4>{{user.username}} {{user.email}}</h4>
-  </li>
-</ul>
+<div class="card-panel z-depth-0">
+  <table class="responsive-table highlight centered">
+
+    <thead>
+    <tr>
+      <th>username</th>
+      <th>email</th>
+      <th>roles</th>
+      <th>actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.username}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.roles.join(", ")}}</td>
+      <td>EDIT | DEACTIVATE</td>
+    </tr>
+    </tbody>
+
+  </table>
+</div>

@@ -1,10 +1,7 @@
 export class UserModel {
+  id: Number;
   username: String;
   email: String;
+  roles: String[];
 
-
-  constructor(username: String, email: String) {
-    this.username = username;
-    this.email = email;
-  }
 }

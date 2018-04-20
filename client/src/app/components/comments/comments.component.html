@@ -1,5 +1,8 @@
 <ng-container *ngIf="authService.isLoggedIn; else login">
 
+  <button class="waves-effect waves-light btn" *ngIf="!showComments" (click)="displayComments()">Display comments</button>
+  <button class="waves-effect waves-light btn" *ngIf="showComments" (click)="hideComments()">Hide Comments</button>
+
   <div *ngIf="comments">
     <div class="row" *ngFor="let comment of comments">
       <div class="col s12 grey-text text-lighten-1">Published on {{comment.publishedOn | date:'MM/dd/yyyy'}} by
