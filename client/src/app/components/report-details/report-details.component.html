@@ -1,6 +1,8 @@
 <div *ngIf="report | async; let report; else loading">
   <h4 class="header2">{{report.title}}</h4>
-  <div class="col s2 grey-text text-lighten-1">Published on {{report.publishedOn | date:'MM/dd/yyyy'}}</div>
+  <div class="col s2 grey-text text-lighten-1">Published on {{report.publishedOn | date:'MM/dd/yyyy'}} by
+    {{report.username}}
+  </div>
 
   <div>
     <div ng2-carouselamos
@@ -26,7 +28,20 @@
 
     </ng-template>
   </div>
+
+  <div class="row">
+      <div class="card-panel z-depth-0">
+        <p>
+          {{report.content}}
+        </p>
+      </div>
+    </div>
+
+  <app-comments></app-comments>
 </div>
+
+
+
 <ng-template #loading>Loading Data...</ng-template>
 
 

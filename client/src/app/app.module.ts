@@ -25,6 +25,8 @@ import {ImageUploadService} from './core/services/image-upload.service';
 
 import {TokenInterceptor} from './core/interceptors/token.interceptor';
 import {GlobalErrorHandler} from './core/error.handler';
+import { CommentsComponent } from './components/comments/comments.component';
+import {CommentsService} from './core/services/comments.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import {GlobalErrorHandler} from './core/error.handler';
     UsersComponent,
     ReportComponent,
     AllReportsComponent,
-    ReportDetailsComponent
+    ReportDetailsComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import {GlobalErrorHandler} from './core/error.handler';
     UserService,
     ReportService,
     ImageUploadService,
+    CommentsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
