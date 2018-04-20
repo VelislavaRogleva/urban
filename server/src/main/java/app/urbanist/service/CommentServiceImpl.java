@@ -28,23 +28,21 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public boolean addComment(CommentAddModel cam) {
+    public Comment addComment(CommentAddModel cam) {
         Comment comment = new Comment();
         comment.setContent(cam.getContent());
         comment.setPublishedOn(new Date());
 
         Report report = this.reportService.getOne(cam.getReportId());
-        if (report == null) return false;
+        if (report == null) return null;
 
         User user = this.userService.getOne(cam.getUserId());
-        if (user == null) return false;
+        if (user == null) return null;
 
         comment.setReport(this.reportService.getOne(cam.getReportId()));
         comment.setUser(this.userService.getOne(cam.getUserId()));
 
-        this.commentRepository.save(comment);
-
-        return true;
+        return this.commentRepository.save(comment);
     }
 
     @Override

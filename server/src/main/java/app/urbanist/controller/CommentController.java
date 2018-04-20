@@ -1,5 +1,6 @@
 package app.urbanist.controller;
 
+import app.urbanist.entity.Comment;
 import app.urbanist.model.binding.CommentAddModel;
 import app.urbanist.model.view.CommentViewModel;
 import app.urbanist.service.CommentService;
@@ -21,9 +22,9 @@ public class CommentController {
 
     @PostMapping("/comments/add")
     public ResponseEntity<?> addComment(@Valid @RequestBody CommentAddModel cam){
-        boolean result = this.commentService.addComment(cam);
+        Comment result = this.commentService.addComment(cam);
 
-        if (!result) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (result == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

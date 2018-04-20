@@ -1,5 +1,6 @@
 package app.urbanist;
 
+import app.urbanist.entity.Comment;
 import app.urbanist.entity.Report;
 import app.urbanist.entity.User;
 import app.urbanist.model.binding.CommentAddModel;
@@ -15,8 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import org.mockito.InjectMocks;
@@ -51,7 +51,9 @@ public class CommentServiceTests {
     public void setUp() {
 
         User user = new User();
+        user.setId(userId);
         Report report = new Report();
+        report.setId(reportId);
 
         when(this.commentRepository.save(any())).thenAnswer(i -> i.getArgument(0));
         when(this.userService.getOne(userId)).thenReturn(user);
@@ -69,9 +71,11 @@ public class CommentServiceTests {
         cam.setReportId(reportId);
         cam.setUserId(userId);
 
-        boolean result = this.commentService.addComment(cam);
+        Comment result = this.commentService.addComment(cam);
 
-        assertTrue("Comment wasn't added correctly", result);
+        assertEquals("Comment's content wasn't added correctly", cam.getContent(), result.getContent());
+        assertEquals("Comment's report id wasn't correctly added", cam.getReportId(), result.getReport().getId());
+        assertEquals("Comment's user id wasn't correctly added", cam.getUserId(), result.getUser().getId());
     }
 
     @Test
@@ -82,9 +86,9 @@ public class CommentServiceTests {
         cam.setReportId(invalidId);
         cam.setUserId(userId);
 
-        boolean result = this.commentService.addComment(cam);
+        Comment result = this.commentService.addComment(cam);
 
-        assertEquals("Adding a comment to a non-existent report should return false", false, result);
+        assertEquals("Adding a comment to a non-existent report should return null", null, result);
     }
 
     @Test
@@ -95,9 +99,9 @@ public class CommentServiceTests {
         cam.setReportId(reportId);
         cam.setUserId(invalidId);
 
-        boolean result = this.commentService.addComment(cam);
+        Comment result = this.commentService.addComment(cam);
 
-        assertEquals("Adding a comment to a non-existent user should return false", false, result);
+        assertEquals("Adding a comment to a non-existent user should return false", null, result);
     }
 
     @Test

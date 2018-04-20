@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface UserService {
 
-    boolean registerUser(UserRegisterModel urm) throws EmailNotUniqueException, UsernameNotUniqueException;
+    User registerUser(UserRegisterModel urm) throws EmailNotUniqueException, UsernameNotUniqueException;
 
     List<UserViewModel> getAllUsers();
 

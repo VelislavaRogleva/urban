@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean registerUser(UserRegisterModel urm) throws EmailNotUniqueException, UsernameNotUniqueException {
+    public User registerUser(UserRegisterModel urm) throws EmailNotUniqueException, UsernameNotUniqueException {
 
         if(this.userRepository.findByUsername(urm.getUsername()) != null) {
             throw new UsernameNotUniqueException("Username is already in use");
@@ -54,9 +54,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.getRoles().add(role);
 
         this.roleRepository.save(role);
-        this.userRepository.save(user);
 
-        return true;
+        return this.userRepository.save(user);
     }
 
     @Override
@@ -71,34 +70,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getOne(Long id) {
-        Optional<User> user = this.userRepository.findById(id);
-        if (!user.isPresent()) return null;
-        return user.get();
-    }
-
-//    @Override
-//    public void registerUser(@Valid UserRegisterModel urm) throws UsernameNotUniqueException, EmailNotUniqueException {
-//
-//        if(this.userRepository.findByUsername(urm.getUsername()) != null) {
-//            throw new UsernameNotUniqueException("Username is already in use");
-//        }
-//
-//        if (urm.getEmail() != null && this.userRepository.findByEmail(urm.getEmail()) != null) {
-//            throw new EmailNotUniqueException("Email is already in use");
-//        }
-//
-//        User user = ModelParser.getInstance().map(urm, User.class);
-//        user.setPassword(this.passwordEncoder.encode(urm.getPassword()));
-//        Role role = this.roleRepository.findByName("USER");
-//        role.getUsers().add(user);
-//        user.getRoles().add(role);
-//
-//        this.roleRepository.save(role);
-//        this.userRepository.save(user);
-//    }
-
-    @Override
     public UserDetails loadUserByUsername(String username) throws org.springframework.security.core.userdetails.UsernameNotFoundException {
         User user = this.userRepository.findByUsername(username);
         if (user == null) {
@@ -111,63 +82,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }
 
-//    @Override
-//    public List<UserViewModel> getAll() {
-//        List<User> users = this.userRepository.findAll();
-//        List<UserViewModel> uvms = new ArrayList<>();
-//        for (User user : users) {
-//            UserViewModel uvm = ModelParser.getInstance().map(user, UserViewModel.class);
-//            uvms.add(uvm);
-//        }
-//        return uvms;
-//    }
-//
-//    @Override
-//    public UserEditModel findById(Long id) {
-//
-//        Optional<User> user = this.userRepository.findById(id);
-//        if (user.isPresent()) {
-//            UserEditModel uem = ModelParser.getInstance().map(user.get(), UserEditModel.class);
-//            Set<Long> roleIds = new HashSet<>();
-//            for (Role role : user.get().getRoles()) {
-//                roleIds.add(role.getId());
-//            }
-//            uem.setPassword("");
-//            uem.setConfirmPassword("");
-//            uem.setRolesIds(roleIds);
-//            return uem;
-//        }
-//        return null;
-//    }
-//
-//    @Override
-//    public void editUser(@Valid UserEditModel uem) {
-//        Optional<User> optionalUser = this.userRepository.findById(uem.getId());
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//            user.setUsername(uem.getUsername());
-//            if (uem.getPassword() != null && !uem.getPassword().isEmpty()) {
-//                user.setPassword(passwordEncoder.encode(uem.getPassword()));
-//            }
-//            user.setEmail(uem.getEmail());
-//
-//            Set<Long> roleIdsFromDb = user.getRoles().stream().map(Role::getId).collect(Collectors.toSet());
-//            for (Long id : roleIdsFromDb) {
-//                if (!uem.getRolesIds().contains(id)) {
-//                    user.getRoles().remove(this.roleRepository.getOne(id));
-//                }
-//            }
-//            for (Long id : uem.getRolesIds()) {
-//                if (!roleIdsFromDb.contains(id)) {
-//                    Role role = this.roleRepository.getOne(id);
-//                    user.getRoles().add(role);
-//                    role.getUsers().add(user);
-//                    this.roleRepository.save(role);
-//                }
-//            }
-//
-//            this.userRepository.save(user);
-//
-//        }
-//    }
+    @Override
+    public User getOne(Long id) {
+        Optional<User> user = this.userRepository.findById(id);
+        if (!user.isPresent()) return null;
+        return user.get();
+    }
 }
