@@ -8,9 +8,6 @@ import {Observable} from 'rxjs/Observable';
 })
 export class HeaderComponent implements OnInit {
 
-
-
-
   constructor(public authService: AuthService) { }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ReportDetailsModel} from '../../core/models/report.model';
-import {ReportService} from '../../core/services/report.service';
+import {ReportDetailsModel} from '../../../core/models/report.model';
+import {ReportService} from '../../../core/services/report.service';
 import {ActivatedRoute} from '@angular/router';
 import {share} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';

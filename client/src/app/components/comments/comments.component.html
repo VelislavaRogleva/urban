@@ -1,40 +1,50 @@
-<div *ngIf="comments">
-  <div class="row" *ngFor="let comment of comments">
-    <div class="col s12 grey-text text-lighten-1">Published on {{comment.publishedOn | date:'MM/dd/yyyy'}} by
-      {{comment.username}}
-    </div>
-    <div class="col s6">
-      <blockquote>
-        {{comment.content}}
-      </blockquote>
-    </div>
-  </div>
-</div>
+<ng-container *ngIf="authService.isLoggedIn; else login">
 
-
-<div class="row">
-  <div class="card-panel z-depth-0">
-
-    <h6>Add a comment</h6>
-
-    <form [formGroup]="form">
-
-      <div class="row">
-        <div class="input-field col s6">
-          <label>Content</label>
-          <textarea class="materialize-textarea" data-length="10000" formControlName="content"></textarea>
-          <small
-            *ngIf="form.controls.content.invalid && (form.controls.content.dirty || form.controls.content.touched)"
-            class="red-text">
-            Content required.
-          </small>
-        </div>
+  <div *ngIf="comments">
+    <div class="row" *ngFor="let comment of comments">
+      <div class="col s12 grey-text text-lighten-1">Published on {{comment.publishedOn | date:'MM/dd/yyyy'}} by
+        {{comment.username}}
       </div>
-
-      <button class="waves-effect waves-light btn"
-              (click)="submitData()" [disabled]="!form.valid">Submit
-      </button>
-
-    </form>
+      <div class="col s6">
+        <blockquote>
+          {{comment.content}}
+        </blockquote>
+      </div>
+    </div>
   </div>
-</div>
+
+
+  <div class="row">
+    <div class="card-panel z-depth-0">
+
+      <h6>Add a comment</h6>
+
+      <form [formGroup]="form">
+
+        <div class="row">
+          <div class="input-field col s6">
+            <label>Content</label>
+            <textarea class="materialize-textarea" data-length="10000" formControlName="content"></textarea>
+            <small
+              *ngIf="form.controls.content.invalid && (form.controls.content.dirty || form.controls.content.touched)"
+              class="red-text">
+              Content required.
+            </small>
+          </div>
+        </div>
+
+        <button class="waves-effect waves-light btn"
+                (click)="submitData()" [disabled]="!form.valid">Submit
+        </button>
+
+      </form>
+    </div>
+  </div>
+</ng-container>
+
+
+<ng-template #login>
+  <div>
+    <a routerLink="/login">Log in</a> to read comments or leave a comment!
+  </div>
+</ng-template>

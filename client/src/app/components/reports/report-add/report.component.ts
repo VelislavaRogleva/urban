@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormArray, Validators} from '@angular/forms';
 
-import {ImageModel, ReportModel} from '../../core/models/report.model';
-import {ReportService} from '../../core/services/report.service';
-import {ImageUploadService} from '../../core/services/image-upload.service';
+import {ImageModel, ReportModel} from '../../../core/models/report.model';
+import {ReportService} from '../../../core/services/report.service';
+import {ImageUploadService} from '../../../core/services/image-upload.service';
 import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-report',
@@ -34,37 +34,30 @@ export class ReportComponent implements OnInit {
 
 
   submitData() {
-
-    console.log(this.files);
     let data = this.form.value;
     let reportModel = new ReportModel();
     reportModel.location = data.location;
     reportModel.title = data.title;
     reportModel.content = data.content;
 
+    let observableArray: any = [];
+    this.files.forEach((file: any, index: any) => {
+      observableArray.push(this.imageUploadService.addPicture(file));
+    });
 
+    forkJoin(observableArray)
+      .subscribe(fileIds => {
+        //this.myFunction(data[0], data[1]...);
+        let images: ImageModel[] = [];
+        for (let i in fileIds) {
+          let img = new ImageModel(data.images[i].caption, fileIds[i]);
+          images.push(img);
+        }
 
-
-
-    // this.uploadFiles().subscribe(res => {
-    //   console.log(res);
-    // });
-
-    // this.reportService.addReport(reportModel);
+        reportModel.images = images;
+        this.reportService.addReport(reportModel);
+      });
   }
-
-  // uploadFiles(): Observable<ImageModel[]> {
-  //     let result = [];
-  //
-  //     this.files.forEach((file) => {
-  //       this.imageUploadService.addPicture(file).subscribe(res => {
-  //         result.push(res);
-  //       });
-  //     });
-  //
-  //     return forkJoin(result);
-  // }
-
 
   onFileChange(event, i) {
     if (event.target.files.length > 0) {

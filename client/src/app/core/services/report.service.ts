@@ -16,15 +16,9 @@ export class ReportService {
 
   addReport(model: ReportModel) {
 
-    console.log("ADDING REPORT: ");
-    for (let i of model.images) {
-      console.log(i.file);
-    }
-
     let url = environment.api_url + '/reports/add';
 
-    return this.http.post(url, model)
-      .subscribe();
+    return this.http.post(url, model).subscribe();
   }
 
   getAllReports() {
