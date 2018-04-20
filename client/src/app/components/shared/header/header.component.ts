@@ -8,6 +8,8 @@ import {Observable} from 'rxjs/Observable';
 })
 export class HeaderComponent implements OnInit {
 
+  public LOGO = require("./assets/logo.png");
+
   constructor(public authService: AuthService) { }
 
   ngOnInit() {

@@ -1,8 +1,14 @@
 <nav class="z-depth-0 white blue-text">
-  <a href="/" class="brand-logo">blah</a>
 
   <div class="nav-wrapper blue-text" >
-    <ul class="left hide-on-med-and-down">
+
+
+    <ul id="nav-mobile" class="left hide-on-med-and-down">
+      <li>
+        <a routerLink="/" >
+          <img [src]="LOGO" height="65"/>
+        </a>
+      </li>
       <li>
         <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
       </li>
@@ -16,7 +22,6 @@
         <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All users</a>
       </li>
     </ul>
-
     <ul class="right hide-on-med-and-down">
       <li *ngIf="!authService.isLoggedIn">
         <a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Log in</a>

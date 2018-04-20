@@ -1,9 +1,9 @@
-
-<div class="row" *ngFor="let report of reports">
-  <div class="col s2 grey-text text-lighten-1">Published on {{report.publishedOn |  date:'MM/dd/yyyy'}}</div>
-  <div class="col s6">
-    <a routerLink="/details/{{report.id}}"><span>{{report.title}}</span></a>
-    <p>{{report.content.substr(0, 200)}}...</p>
+<div class="card-panel z-depth-0">
+  <div class="row" *ngFor="let report of reports">
+    <div class="col s2 grey-text text-lighten-1">Published on {{report.publishedOn | date:'MM/dd/yyyy'}}</div>
+    <div class="col s6">
+      <a routerLink="/details/{{report.id}}"><span>{{report.title}}</span></a>
+      <p>{{report.content.substr(0, 200)}}...</p>
+    </div>
   </div>
 </div>
-
