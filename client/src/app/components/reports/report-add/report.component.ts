@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormArray, Validators} from '@angular/forms';
 
-import {ImageModel, ReportModel} from '../../../core/models/report.model';
+import {ReportModel} from '../../../core/models/report.model';
+import {ImageModel} from '../../../core/models/image.model';
 import {ReportService} from '../../../core/services/report.service';
 import {ImageUploadService} from '../../../core/services/image-upload.service';
-import {Observable} from 'rxjs/Observable';
+
 import { forkJoin } from 'rxjs/observable/forkJoin';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-report',
@@ -31,7 +31,6 @@ export class ReportComponent implements OnInit {
       images: this.fb.array([this.initImages()])
     });
   }
-
 
   submitData() {
     let data = this.form.value;
