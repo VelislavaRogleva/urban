@@ -3,25 +3,34 @@
   <form #userForm="ngForm" (ngSubmit)="save(userForm)">
     <div class="row">
       <label>Username:</label>
-      <input [(ngModel)]="userModel.username" name="username" type="text" required>
+      <input [(ngModel)]="userModel.username" name="username" type="text" required #username="ngModel">
 
+      <small *ngIf="username.invalid && (username.dirty || username.touched)" class="red-text">
+        Username required.
+      </small>
+
+      <div class="row">
+        <label>Email:</label>
+        <input [(ngModel)]="userModel.email" name="email" type="email" required pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" #email="ngModel">
+
+        <small *ngIf="email.invalid && (email.dirty || email.touched)" class="red-text">
+          Email invalid.
+        </small>
+      </div>
+
+      <div class="input-field col s12">
+        <span>Select roles</span>
+        <select style="display: inline" multiple name="roles" [ngModel]="userModel.roles" required #roles="ngModel">
+          <option *ngFor="let role of allRoles" [ngValue]="role">
+            {{ role }}
+          </option>
+        </select>
+        <small *ngIf="roles.invalid && (roles.dirty || roles.touched)" class="red-text">
+          Roles required.
+        </small>
+      </div>
+      <button [disabled]="!userForm.valid">Submit</button>
     </div>
-
-    <div class="row">
-      <label>Email:</label>
-      <input [(ngModel)]="userModel.email" name="email" type="text" required>
-
-    </div>
-
-    <div class="input-field col s12">
-      <span>Select roles</span>
-      <select style="display: inline" multiple name="roles" [ngModel]="userModel.roles">
-      <option *ngFor="let role of allRoles" [ngValue]="role">
-        {{ role }}
-      </option>
-    </select>
-    </div>
-    <button>Submit</button>
   </form>
 </div>
 

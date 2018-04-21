@@ -18,7 +18,9 @@ export class ReportService {
 
     let url = environment.api_url + '/reports/add';
 
-    return this.http.post(url, model).subscribe();
+    return this.http.post(url, model).subscribe(res => {
+        this.router.navigate(['/reports']);
+      });
   }
 
   getAllReports() {

@@ -20,6 +20,7 @@ export class AuthService {
 
   public isLoggedIn: boolean;
   public isAdmin: boolean;
+  public username: string;
 
   constructor(private router: Router,
               private http: HttpClient,
@@ -47,18 +48,15 @@ export class AuthService {
             this.isAdmin = true;
           }
 
-          this.router.navigate(['/']);
+          let decoded = decode(token);
+          this.username = decoded['sub'];
+
+          this.router.navigate(['/home']);
+          this.toastrService.success("You have logged in successfully!");
 
         },
         err => {
-          this.toastrService.error(
-            "Wrong password or username!",
-            "Error",
-            {
-              closeButton: true,
-              timeOut: 5000,
-              onActivateTick: true
-            })
+          this.toastrService.error("Login unsuccessful.");
         });
   }
 
@@ -80,7 +78,7 @@ export class AuthService {
     localStorage.removeItem("authToken");
     this.isLoggedIn = false;
     this.isAdmin = false;
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
     this.toastrService.success("You have successfully logged out!")
   }
 

@@ -13,17 +13,16 @@ export class GlobalErrorHandler extends ErrorHandler {
   }
 
   public handleError(error: any): void {
-    console.log(error);
-    // this.toastrService.error(
-    //   // error.error['error'],
-    //   "Error",
-    //   "Error",
-    //   {
-    //     closeButton: true,
-    //     timeOut: 5000,
-    //     onActivateTick: true
-    //   }
-    // );
+
+    this.toastrService.error(
+      error['error'],
+      "",
+      {
+        closeButton: true,
+        timeOut: 5000,
+        onActivateTick: true
+      }
+    );
 
     super.handleError(error);
   }

@@ -29,6 +29,7 @@ import {CommentsService} from './core/services/comments.service';
 
 import {TokenInterceptor} from './core/interceptors/token.interceptor';
 import {GlobalErrorHandler} from './core/error.handler';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {GlobalErrorHandler} from './core/error.handler';
     AllReportsComponent,
     ReportDetailsComponent,
     CommentsComponent,
-    UsersEditComponent
+    UsersEditComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

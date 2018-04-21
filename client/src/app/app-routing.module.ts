@@ -10,10 +10,12 @@ import {ReportDetailsComponent} from './components/reports/report-details/report
 
 import {AuthGuardService as AuthGuard} from './core/services/auth-guard.service'
 import {UsersEditComponent} from './components/users/users-edit/users-edit.component';
+import {HomeComponent} from './components/home/home.component';
 
 
 const routes: Routes = [
 
+  {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'users', component: UsersComponent},

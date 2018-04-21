@@ -7,11 +7,12 @@ import {catchError} from 'rxjs/operators';
 
 import {UserModel} from '../models/user.model';
 import {environment} from '../../../environments/environment';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class UserService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getAllUsers(): Observable<UserModel[]> {
     const url = environment.api_url + '/users/all';
@@ -25,8 +26,9 @@ export class UserService {
 
   editUser(userModel: UserModel) {
     const url = environment.api_url + '/users/edit';
-    console.log(userModel);
-    return this.http.post(url, userModel).subscribe();
+    return this.http.post(url, userModel).subscribe(res => {
+      this.router.navigate(['/users']);
+    });
 
   }
 

@@ -24,7 +24,8 @@
     <ng-template #item let-item let-i="index">
 
       <div class="images">
-        <img src="{{item.url}}" height="500">
+        <img src="{{item.url}}" width="500">
+        <div>{{item.caption}}</div>
       </div>
 
     </ng-template>
@@ -32,7 +33,7 @@
 
   <div class="row">
       <div class="card-panel z-depth-0">
-        <p>
+        <p style="white-space: pre-line">
           {{report.content}}
         </p>
       </div>

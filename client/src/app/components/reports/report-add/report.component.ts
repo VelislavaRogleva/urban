@@ -61,7 +61,7 @@ export class ReportComponent implements OnInit {
   onFileChange(event, i) {
     if (event.target.files.length > 0) {
       let file = event.target.files[0];
-      this.files.push(file);
+      this.files[i] = file;
     }
   }
 
