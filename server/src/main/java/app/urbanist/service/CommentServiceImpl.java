@@ -8,6 +8,7 @@ import app.urbanist.model.view.CommentViewModel;
 import app.urbanist.repository.CommentRepository;
 import app.urbanist.repository.UserRepository;
 import app.urbanist.util.ModelParser;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,12 +20,12 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final ReportService reportService;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
-    public CommentServiceImpl(CommentRepository commentRepository, ReportService reportService, UserService userService) {
+    public CommentServiceImpl(CommentRepository commentRepository, ReportService reportService, UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.reportService = reportService;
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -36,11 +37,11 @@ public class CommentServiceImpl implements CommentService {
         Report report = this.reportService.getOne(cam.getReportId());
         if (report == null) return null;
 
-        User user = this.userService.getOne(cam.getUserId());
+        User user = this.userRepository.findByUsername((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         if (user == null) return null;
 
         comment.setReport(this.reportService.getOne(cam.getReportId()));
-        comment.setUser(this.userService.getOne(cam.getUserId()));
+        comment.setUser(user);
 
         return this.commentRepository.save(comment);
     }

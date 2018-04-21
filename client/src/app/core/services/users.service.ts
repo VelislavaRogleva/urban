@@ -18,4 +18,15 @@ export class UserService {
     return this.http.get<UserModel[]>(url);
   }
 
+  getUser(id: number) {
+    const url = environment.api_url + '/users/edit/' + id;
+    return this.http.get<UserModel>(url);
+  }
+
+  editUser(userModel: UserModel) {
+    const url = environment.api_url + '/users/edit';
+    console.log(userModel);
+    return this.http.post(url, userModel).subscribe();
+
+  }
 }

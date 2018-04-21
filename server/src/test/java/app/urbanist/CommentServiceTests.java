@@ -40,7 +40,7 @@ public class CommentServiceTests {
     @Mock
     private CommentRepository commentRepository;
     @Mock
-    private UserService userService;
+    private UserRepository userRepository;
     @Mock
     private ReportService reportService;
 
@@ -56,10 +56,10 @@ public class CommentServiceTests {
         report.setId(reportId);
 
         when(this.commentRepository.save(any())).thenAnswer(i -> i.getArgument(0));
-        when(this.userService.getOne(userId)).thenReturn(user);
         when(this.reportService.getOne(reportId)).thenReturn(report);
 
-        when(this.userService.getOne(invalidId)).thenReturn(null);
+        when(this.userRepository.findByUsername(any())).thenReturn(user);
+
         when(this.reportService.getOne(invalidId)).thenReturn(null);
     }
 
@@ -69,13 +69,11 @@ public class CommentServiceTests {
         CommentAddModel cam = new CommentAddModel();
         cam.setContent("Content");
         cam.setReportId(reportId);
-        cam.setUserId(userId);
 
         Comment result = this.commentService.addComment(cam);
 
         assertEquals("Comment's content wasn't added correctly", cam.getContent(), result.getContent());
         assertEquals("Comment's report id wasn't correctly added", cam.getReportId(), result.getReport().getId());
-        assertEquals("Comment's user id wasn't correctly added", cam.getUserId(), result.getUser().getId());
     }
 
     @Test
@@ -84,25 +82,13 @@ public class CommentServiceTests {
         CommentAddModel cam = new CommentAddModel();
         cam.setContent("Content");
         cam.setReportId(invalidId);
-        cam.setUserId(userId);
+
 
         Comment result = this.commentService.addComment(cam);
 
         assertEquals("Adding a comment to a non-existent report should return null", null, result);
     }
 
-    @Test
-    public void testAddComment_withInvalidUserId_shouldReturnFalse() {
-
-        CommentAddModel cam = new CommentAddModel();
-        cam.setContent("Content");
-        cam.setReportId(reportId);
-        cam.setUserId(invalidId);
-
-        Comment result = this.commentService.addComment(cam);
-
-        assertEquals("Adding a comment to a non-existent user should return false", null, result);
-    }
 
     @Test
     public void testGetComments_withInvalidReportid_shouldReturnNull() {

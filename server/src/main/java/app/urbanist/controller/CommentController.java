@@ -24,7 +24,7 @@ public class CommentController {
     public ResponseEntity<?> addComment(@Valid @RequestBody CommentAddModel cam){
         Comment result = this.commentService.addComment(cam);
 
-        if (result == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (result == null) return new ResponseEntity<>("Sorry, we could not process your request.", HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

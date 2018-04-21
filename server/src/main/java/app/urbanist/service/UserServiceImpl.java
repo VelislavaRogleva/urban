@@ -4,8 +4,10 @@ import app.urbanist.entity.Role;
 import app.urbanist.entity.User;
 
 import app.urbanist.exception.EmailNotUniqueException;
+import app.urbanist.exception.UserAccountDeactivatedException;
 import app.urbanist.exception.UsernameNotUniqueException;
 import app.urbanist.model.binding.UserRegisterModel;
+import app.urbanist.model.view.RoleViewModel;
 import app.urbanist.model.view.UserViewModel;
 import app.urbanist.repository.RoleRepository;
 import app.urbanist.repository.UserRepository;
@@ -64,8 +66,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         List<UserViewModel> models = new ArrayList<>();
         for (User user : users) {
             UserViewModel uvm = ModelParser.getInstance().map(user, UserViewModel.class);
+            uvm.setRoles(user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
             models.add(uvm);
         }
+
         return models;
     }
 
@@ -74,6 +78,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = this.userRepository.findByUsername(username);
         if (user == null) {
             throw new org.springframework.security.core.userdetails.UsernameNotFoundException("User not found");
+        }
+
+        if (user.isDeactivated()) {
+            return null;
         }
 
         Set<Role> roles = user.getRoles();
@@ -87,5 +95,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Optional<User> user = this.userRepository.findById(id);
         if (!user.isPresent()) return null;
         return user.get();
+    }
+
+    @Override
+    public UserViewModel getUserViewModel(Long id) {
+
+        User user = this.getOne(id);
+        if (user == null) return null;
+
+        UserViewModel uvm = ModelParser.getInstance().map(user, UserViewModel.class);
+        uvm.setRoles(user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
+        return uvm;
     }
 }

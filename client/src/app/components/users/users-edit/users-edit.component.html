@@ -1,0 +1,27 @@
+<div class="card-panel z-depth-0">
+
+  <form #userForm="ngForm" (ngSubmit)="save(userForm)">
+    <div class="row">
+      <label>Username:</label>
+      <input [(ngModel)]="userModel.username" name="username" type="text" required>
+
+    </div>
+
+    <div class="row">
+      <label>Email:</label>
+      <input [(ngModel)]="userModel.email" name="email" type="text" required>
+
+    </div>
+
+    <div class="input-field col s12">
+      <span>Select roles</span>
+      <select style="display: inline" multiple name="roles" [ngModel]="userModel.roles">
+      <option *ngFor="let role of allRoles" [ngValue]="role">
+        {{ role }}
+      </option>
+    </select>
+    </div>
+    <button>Submit</button>
+  </form>
+</div>
+

@@ -22,6 +22,9 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @Column
+    private boolean isDeactivated;
+
     @ManyToMany
     @JoinTable(
             name = "users_roles",
@@ -94,5 +97,13 @@ public class User {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public boolean isDeactivated() {
+        return isDeactivated;
+    }
+
+    public void setDeactivated(boolean deactivated) {
+        isDeactivated = deactivated;
     }
 }

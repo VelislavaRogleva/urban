@@ -15,4 +15,6 @@ public interface UserService {
     List<UserViewModel> getAllUsers();
 
     User getOne(Long id);
+
+    UserViewModel getUserViewModel(Long id);
 }
