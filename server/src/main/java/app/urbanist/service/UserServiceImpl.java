@@ -110,9 +110,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User editUser(UserEditModel userEditModel) {
+    public User editUser(UserEditModel userEditModel) throws UsernameNotUniqueException, EmailNotUniqueException {
         User user = this.getOne(userEditModel.getId());
         if (user == null) return null;
+
+        if (!user.getUsername().equals(userEditModel.getUsername())) {
+            User byUsername = this.userRepository.findByUsername(userEditModel.getUsername());
+            if (byUsername != null) {
+                throw new UsernameNotUniqueException("Username already used");
+            }
+        }
+
+        if (!user.getEmail().equals(userEditModel.getEmail())) {
+            User byEmail = this.userRepository.findByEmail(userEditModel.getEmail());
+            if (byEmail != null) {
+                throw new EmailNotUniqueException("Email already used.");
+            }
+        }
 
         user.setUsername(userEditModel.getUsername());
         user.setEmail(userEditModel.getEmail());

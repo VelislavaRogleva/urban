@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -24,14 +26,21 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public String uploadFile(MultipartFile file) {
-        String imageId = "";
+        String extension = file.getOriginalFilename().split("\\.")[1];
+        List<String> validExtensions = new ArrayList<>(){{
+            add("jpg");
+            add("jpeg");
+            add("png");
+        }};
+        if (!validExtensions.contains(extension)) return null;
 
         try {
-            imageId = this.cloudImageUploader.uploadFile(file);
+            String imageId = this.cloudImageUploader.uploadFile(file);
+            return imageId;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return imageId;
+        return null;
     }
 
     @Override

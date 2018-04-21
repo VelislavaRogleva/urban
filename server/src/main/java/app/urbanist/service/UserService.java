@@ -19,7 +19,7 @@ public interface UserService {
 
     UserViewModel getUserViewModel(Long id);
 
-    User editUser(UserEditModel userEditModel);
+    User editUser(UserEditModel userEditModel) throws UsernameNotUniqueException, EmailNotUniqueException;
 
     void changeActivated(Long id, boolean b);
 }

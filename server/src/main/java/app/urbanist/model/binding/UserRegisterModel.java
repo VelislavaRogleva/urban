@@ -1,5 +1,6 @@
 package app.urbanist.model.binding;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 public class UserRegisterModel {
@@ -11,6 +12,7 @@ public class UserRegisterModel {
     private String password;
 
     @NotEmpty
+    @Email
     private String email;
 
     public String getUsername() {

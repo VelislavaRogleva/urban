@@ -51,7 +51,7 @@ public class UserController {
 
     @PostMapping("/edit")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void editUser(@RequestBody UserEditModel userEditModel) {
+    public void editUser(@Valid @RequestBody UserEditModel userEditModel) throws EmailNotUniqueException, UsernameNotUniqueException {
         this.userService.editUser(userEditModel);
     }
 

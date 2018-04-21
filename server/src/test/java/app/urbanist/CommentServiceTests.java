@@ -6,12 +6,9 @@ import app.urbanist.entity.User;
 import app.urbanist.model.binding.CommentAddModel;
 import app.urbanist.model.view.CommentViewModel;
 import app.urbanist.repository.CommentRepository;
-import app.urbanist.repository.ReportRepository;
 import app.urbanist.repository.UserRepository;
-import app.urbanist.service.CommentService;
 import app.urbanist.service.CommentServiceImpl;
 import app.urbanist.service.ReportService;
-import app.urbanist.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,9 +30,9 @@ import java.util.List;
 @ActiveProfiles("test")
 public class CommentServiceTests {
 
-    private static final Long reportId = 1L;
-    private static final Long userId = 1L;
-    private static final Long invalidId = 18L;
+    private static final Long REPORT_ID = 1L;
+    private static final Long USER_ID = 1L;
+    private static final Long INVALID_ID = 18L;
 
     @Mock
     private CommentRepository commentRepository;
@@ -51,16 +48,16 @@ public class CommentServiceTests {
     public void setUp() {
 
         User user = new User();
-        user.setId(userId);
+        user.setId(USER_ID);
         Report report = new Report();
-        report.setId(reportId);
+        report.setId(REPORT_ID);
 
         when(this.commentRepository.save(any())).thenAnswer(i -> i.getArgument(0));
-        when(this.reportService.getOne(reportId)).thenReturn(report);
+        when(this.reportService.getOne(REPORT_ID)).thenReturn(report);
 
         when(this.userRepository.findByUsername(any())).thenReturn(user);
 
-        when(this.reportService.getOne(invalidId)).thenReturn(null);
+        when(this.reportService.getOne(INVALID_ID)).thenReturn(null);
     }
 
     @Test
@@ -68,7 +65,7 @@ public class CommentServiceTests {
 
         CommentAddModel cam = new CommentAddModel();
         cam.setContent("Content");
-        cam.setReportId(reportId);
+        cam.setReportId(REPORT_ID);
 
         Comment result = this.commentService.addComment(cam);
 
@@ -81,7 +78,7 @@ public class CommentServiceTests {
 
         CommentAddModel cam = new CommentAddModel();
         cam.setContent("Content");
-        cam.setReportId(invalidId);
+        cam.setReportId(INVALID_ID);
 
 
         Comment result = this.commentService.addComment(cam);
@@ -92,7 +89,7 @@ public class CommentServiceTests {
 
     @Test
     public void testGetComments_withInvalidReportid_shouldReturnNull() {
-        List<CommentViewModel> comments = this.commentService.getComments(invalidId);
+        List<CommentViewModel> comments = this.commentService.getComments(INVALID_ID);
 
         assertEquals("Getting comments from a non-existent report should return null", null, comments);
     }

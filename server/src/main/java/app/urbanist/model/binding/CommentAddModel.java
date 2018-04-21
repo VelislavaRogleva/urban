@@ -1,11 +1,15 @@
 package app.urbanist.model.binding;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class CommentAddModel {
 
+    @NotEmpty
     private String content;
 
+    @NotNull
     private Long reportId;
-
 
     public String getContent() {
         return content;
