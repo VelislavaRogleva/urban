@@ -1,3 +1,4 @@
+<div *ngIf="users | async; let users; else loading">
 <div class="card-panel z-depth-0">
   <table class="responsive-table highlight centered">
 
@@ -15,9 +16,14 @@
       <td>{{user.username}}</td>
       <td>{{user.email}}</td>
       <td>{{user.roles.join(", ")}}</td>
-      <td><a routerLink="/users/edit/{{user.id}}">EDIT</a> | DEACTIVATE</td>
+      <td>
+        <a routerLink="/users/edit/{{user.id}}">EDIT</a> |
+        <button *ngIf="!user.deactivated" (click)="deactivateAccount(user.id)">DEACTIVATE ACCOUNT</button>
+        <button *ngIf="user.deactivated" (click)="activateAccount(user.id)">ACTIVATE ACCOUNT</button>
     </tr>
     </tbody>
-
   </table>
+
 </div>
+</div>
+<ng-template #loading>Loading Data...</ng-template>

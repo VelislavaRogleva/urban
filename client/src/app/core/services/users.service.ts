@@ -29,4 +29,14 @@ export class UserService {
     return this.http.post(url, userModel).subscribe();
 
   }
+
+  deactivateAccount(id: any) {
+    const url = environment.api_url + '/users/deactivate/' + id;
+    return this.http.post(url, null);
+  }
+
+  activateAccount(id: any) {
+    const url = environment.api_url + '/users/activate/' + id;
+    return this.http.post(url, null);
+  }
 }

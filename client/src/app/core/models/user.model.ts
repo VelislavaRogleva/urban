@@ -3,7 +3,5 @@ export class UserModel {
   username: String;
   email: String;
   roles: String[];
-
-
-
+  deactivated: boolean;
 }

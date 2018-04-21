@@ -3,9 +3,7 @@ import {UserModel} from '../../../core/models/user.model';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../../core/services/users.service';
 import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
-import {PasswordValidation} from '../../register/password-validation';
-import {Observable} from 'rxjs/Observable';
-import {share} from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-users-edit',
@@ -17,7 +15,7 @@ export class UsersEditComponent implements OnInit {
   allRoles = ['ADMIN', 'USER'];
   form: FormGroup;
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private userService: UserService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
