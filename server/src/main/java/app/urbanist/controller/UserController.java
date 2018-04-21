@@ -3,6 +3,7 @@ package app.urbanist.controller;
 import app.urbanist.entity.User;
 import app.urbanist.exception.EmailNotUniqueException;
 import app.urbanist.exception.UsernameNotUniqueException;
+import app.urbanist.model.binding.UserEditModel;
 import app.urbanist.model.binding.UserRegisterModel;
 import app.urbanist.model.view.UserViewModel;
 import app.urbanist.service.UserService;
@@ -33,7 +34,9 @@ public class UserController {
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<UserViewModel> getAllUsers() {
-        return this.userService.getAllUsers();
+        List<UserViewModel> allUsers = this.userService.getAllUsers();
+
+        return allUsers;
     }
 
     @GetMapping("/edit/{id}")
@@ -48,11 +51,19 @@ public class UserController {
 
     @PostMapping("/edit")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void editUser(@RequestBody UserViewModel userViewModel) {
-        System.out.println(userViewModel.getId());
-        System.out.println(userViewModel.getEmail());
-        System.out.println(userViewModel.getUsername());
-        System.out.println(userViewModel.getRoles());
+    public void editUser(@RequestBody UserEditModel userEditModel) {
+        this.userService.editUser(userEditModel);
+    }
 
+    @PostMapping("/deactivate/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deactivateAccount(@PathVariable("id") Long id) {
+        this.userService.changeActivated(id, true);
+    }
+
+    @PostMapping("/activate/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void activateAccount(@PathVariable("id") Long id) {
+        this.userService.changeActivated(id, false);
     }
 }

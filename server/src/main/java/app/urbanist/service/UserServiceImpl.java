@@ -6,6 +6,7 @@ import app.urbanist.entity.User;
 import app.urbanist.exception.EmailNotUniqueException;
 import app.urbanist.exception.UserAccountDeactivatedException;
 import app.urbanist.exception.UsernameNotUniqueException;
+import app.urbanist.model.binding.UserEditModel;
 import app.urbanist.model.binding.UserRegisterModel;
 import app.urbanist.model.view.RoleViewModel;
 import app.urbanist.model.view.UserViewModel;
@@ -107,4 +108,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         uvm.setRoles(user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()));
         return uvm;
     }
+
+    @Override
+    public User editUser(UserEditModel userEditModel) {
+        User user = this.getOne(userEditModel.getId());
+        if (user == null) return null;
+
+        user.setUsername(userEditModel.getUsername());
+        user.setEmail(userEditModel.getEmail());
+        user.setRoles(userEditModel.getRoles().stream().map(this.roleRepository::findByName).collect(Collectors.toSet()));
+
+        this.userRepository.save(user);
+
+        return user;
+    }
+
+    @Override
+    public void changeActivated(Long id, boolean status) {
+        User user = this.getOne(id);
+        if (user == null) return;
+
+        user.setDeactivated(status);
+
+        this.userRepository.save(user);
+    }
+
 }

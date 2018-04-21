@@ -1,11 +1,8 @@
-package app.urbanist.model.view;
+package app.urbanist.model.binding;
 
-import app.urbanist.entity.Role;
-
-import java.util.HashSet;
 import java.util.Set;
 
-public class UserViewModel {
+public class UserEditModel {
 
     private Long id;
 
@@ -14,8 +11,6 @@ public class UserViewModel {
     private String email;
 
     private Set<String> roles;
-
-    private boolean isDeactivated;
 
 
     public Long getId() {
@@ -48,13 +43,5 @@ public class UserViewModel {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
-    }
-
-    public boolean isDeactivated() {
-        return isDeactivated;
-    }
-
-    public void setDeactivated(boolean deactivated) {
-        isDeactivated = deactivated;
     }
 }
